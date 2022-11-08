@@ -22,8 +22,9 @@ import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoic
 public class SearchController {
 
     @GetMapping(value = "")
-    public String search(Model model) {
+    public String search(Model model, String searchType) {
         model.addAttribute("columns", columnChoices);
+        model.addAttribute("searchType", "all");
         return "search";
     }
 
@@ -37,6 +38,11 @@ public class SearchController {
         } else {
             jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         }
+//        if (jobs.size() == 0) {
+//            model.addAttribute("message","Sorry there are no jobs with that criteria.");
+//        }
+        model.addAttribute("searchTerm",searchTerm);
+        model.addAttribute("searchType",searchType);
         model.addAttribute("jobs",jobs);
         model.addAttribute("columns", columnChoices);
 
